@@ -9,7 +9,8 @@ import Foundation
 
 struct Advertisement: Codable {
     let id: Double
-    let categoryId: Int
+    let categoryId: Double
+    let category: Category
     let title: String
     let description: String
     let price: Double

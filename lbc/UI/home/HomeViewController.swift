@@ -15,6 +15,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         title = "Advertisements"
         makeTableView()
+        restManager.getCategories { _, _ in }
+
         restManager.getAdvertisements { advertisements, error in
             if let error = error {
                 print(error)
@@ -72,7 +74,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         //navigationController.push
+        navigationController?.pushViewController(DetailViewController(with: advertisements[indexPath.row]), animated: true)
     }
 }
 

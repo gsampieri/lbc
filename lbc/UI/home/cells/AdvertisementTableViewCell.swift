@@ -8,21 +8,22 @@
 import UIKit
 
 class AdvertisementTableViewCell: UITableViewCell {
+
     private let padding: CGFloat = 8
     
     private let advertisementTitleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        titleLabel.font = UIFont.systemFont(ofSize: 15)
         titleLabel.textAlignment = .left
         titleLabel.numberOfLines = 2
         return titleLabel
     }()
     
     private let advertisementPriceLabel: UILabel = {
-        let descriptionLabel = UILabel()
-        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
-        descriptionLabel.textAlignment = .left
-        return descriptionLabel
+        let priceLabel = UILabel()
+        priceLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        priceLabel.textAlignment = .left
+        return priceLabel
     }()
     
     private var advertisementImageView: UIImageView = {
@@ -45,6 +46,7 @@ class AdvertisementTableViewCell: UITableViewCell {
         advertisementImageView.image = UIImage(named: "lbc_advertisment_placeholder")
         advertisementImageView.contentMode = .scaleAspectFill
     }
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -89,7 +91,7 @@ class AdvertisementTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
+    
     func setAdvertisement(_ advertisement: Advertisement) {
         advertisementTitleLabel.text = advertisement.title
         advertisementPriceLabel.text = advertisement.price.getPriceString()

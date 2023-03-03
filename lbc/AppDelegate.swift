@@ -31,3 +31,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+// MARK: - RestManagerDependant
+extension AppDelegate: RestManagerDependant {}

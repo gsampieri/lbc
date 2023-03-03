@@ -8,10 +8,18 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
+    var advertisement: Advertisement?
+    
+    convenience init(with advertisement: Advertisement) {
+        self.init()
+        
+        self.advertisement = advertisement
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
 }
 

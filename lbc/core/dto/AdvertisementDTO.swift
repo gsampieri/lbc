@@ -9,7 +9,7 @@ import Foundation
 
 struct AdvertisementDTO: Codable {
     let id: Double?
-    let category_id: Int?
+    let category_id: Double?
     let title: String?
     let description: String?
     let price: Double?
@@ -29,9 +29,12 @@ struct AdvertisementDTO: Codable {
            let _thumbImageUrl = URL(string: thumbImage) {
             thumbImageUrl = _thumbImageUrl
         }
-        
+        if let categorie = LbcUserDefaults.categories?.first(where: { $0.id == category_id ?? 0 }) {
+            print(categorie)
+        }
         return Advertisement(id: id ?? 0,
                              categoryId: category_id ?? 0,
+                             category: LbcUserDefaults.categories?.first(where: { $0.id == category_id ?? 0 }) ?? Category(id: 0, name: ""),
                              title: title ?? "",
                              description: description ?? "",
                              price: price ?? 0,
