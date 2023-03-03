@@ -15,9 +15,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         title = "Advertisements"
         makeTableView()
-        restManager.getCategories { _, _ in }
-
-        restManager.getAdvertisements { advertisements, error in
+        restManager.getAdvertisementsCategories { advertisements, error in
             if let error = error {
                 print(error)
                 //TODO: Show popup
@@ -46,7 +44,6 @@ class HomeViewController: UIViewController {
         advertisementsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         advertisementsTableView.register(AdvertisementTableViewCell.self, forCellReuseIdentifier: "advertisementCell")
-
     }
 }
 

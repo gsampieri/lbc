@@ -26,6 +26,13 @@ class AdvertisementTableViewCell: UITableViewCell {
         return priceLabel
     }()
     
+    private let advertisementCategoryLabel: UILabel = {
+        let categoryLabel = UILabel()
+        categoryLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        categoryLabel.textAlignment = .left
+        return categoryLabel
+    }()
+    
     private var advertisementImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "lbc_advertisment_placeholder"))
         imageView.backgroundColor = .lightGray
@@ -52,6 +59,7 @@ class AdvertisementTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(advertisementTitleLabel)
         addSubview(advertisementPriceLabel)
+        addSubview(advertisementCategoryLabel)
         addSubview(advertisementImageView)
         advertisementImageView.anchor(top: topAnchor,
                                       left: leftAnchor,
@@ -75,6 +83,17 @@ class AdvertisementTableViewCell: UITableViewCell {
                                        width: 0,
                                        height: 0,
                                        enableInsets: false)
+        advertisementCategoryLabel.anchor(top: advertisementTitleLabel.bottomAnchor,
+                                          left: advertisementImageView.rightAnchor,
+                                          bottom: advertisementPriceLabel.topAnchor,
+                                          right: rightAnchor,
+                                          paddingTop: 2,
+                                          paddingLeft: padding,
+                                          paddingBottom: 2,
+                                          paddingRight: padding,
+                                          width: 0,
+                                          height: 0,
+                                          enableInsets: false)
         advertisementPriceLabel.anchor(top: nil,
                                        left: advertisementImageView.rightAnchor,
                                        bottom: bottomAnchor,
@@ -95,7 +114,8 @@ class AdvertisementTableViewCell: UITableViewCell {
     func setAdvertisement(_ advertisement: Advertisement) {
         advertisementTitleLabel.text = advertisement.title
         advertisementPriceLabel.text = advertisement.price.getPriceString()
-
+        advertisementCategoryLabel.text = advertisement.category.name
+        
         if let smallImage = advertisement.smallImage {
             advertisementImageView.getImage(from: smallImage)
         }

@@ -75,4 +75,14 @@ class RestManager {
         }
         .resume()
     }
+    
+    func getAdvertisementsCategories(completionHandler: @escaping AdvertisementsCompletion) {
+        getCategories { _, error in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            self.getAdvertisements(completionHandler: completionHandler)
+        }
+    }
 }

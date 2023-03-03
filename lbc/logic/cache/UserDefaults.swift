@@ -17,7 +17,10 @@ struct UserDefaultWrapper<T: Codable> {
 
     var wrappedValue: T? {
         get {
-            return UserDefaults.standard.object(forKey: key) as? T
+            if let decoded  = UserDefaults.standard.object(forKey: key) as? Data {
+                return try? JSONDecoder().decode(T.self, from: decoded)
+            }
+            return nil
         }
         set {
             let encodedData = try? JSONEncoder().encode(newValue)
