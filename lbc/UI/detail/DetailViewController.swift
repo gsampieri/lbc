@@ -14,8 +14,6 @@ class DetailViewController: UIViewController {
         self.init()
         self.advertisement = advertisement
         setupUI()
-//        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        
     }
     
     override func viewDidLoad() {
@@ -25,11 +23,16 @@ class DetailViewController: UIViewController {
                 advertisementImageView.getImage(from: advertisementImage)
             }
             titleLabel.text = advertisement.title
+            priceLabel.text = advertisement.price.getPriceString()
+            categoryLabel.text = advertisement.category.name
+            if let siret = advertisement.siret {
+                siretLabel.text = "N° SIRET: \(siret)"
+            }
             descriptionLabel.text = advertisement.description
+        } else {
+            // TODO: show some error
         }
-        // Do any additional setup after loading the view.
     }
-    
 
     // MARK: - UI
     private let padding: CGFloat = 12
@@ -42,7 +45,8 @@ class DetailViewController: UIViewController {
     
     private var contentView: UIView = {
         let contentView = UIView()
-        contentView.backgroundColor = .red
+        contentView.backgroundColor = UIColor(named: "contentBackgroundColor")
+        contentView.layer.cornerRadius = 8
         return contentView
     }()
     
@@ -50,8 +54,6 @@ class DetailViewController: UIViewController {
         let imageView = UIImageView(image: UIImage(named: "lbc_advertisment_placeholder"))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        imageView.layer.cornerRadius = 8
         imageView.tintColor = UIColor(named: "primary")
         return imageView
     }()
@@ -92,6 +94,58 @@ class DetailViewController: UIViewController {
         return separatorView
     }()
     
+    private let urgentView: UIView = {
+        let urgentView = UIView()
+        let urgentLabel = UILabel()
+        urgentLabel.text = "urgent".localize.uppercased()
+        urgentLabel.textAlignment = .center
+        urgentLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        urgentLabel.textColor = UIColor(named: "primaryColor")
+        urgentView.addSubview(urgentLabel)
+        urgentLabel.anchor(topAnchor: urgentView.topAnchor,
+                           leftAnchor: urgentView.leftAnchor,
+                           bottomAnchor: urgentView.bottomAnchor,
+                           rightAnchor: urgentView.rightAnchor,
+                           paddingTop: 4,
+                           paddingLeft: 4,
+                           paddingBottom: 4,
+                           paddingRight: 4)
+        urgentView.layer.borderColor = UIColor(named: "primaryColor")?.cgColor
+        urgentView.layer.borderWidth = 1
+        urgentView.layer.cornerRadius = 8
+        return urgentView
+    }()
+    
+    private let siretLabel: UILabel = {
+        let siretLabel = UILabel()
+        siretLabel.font = UIFont.systemFont(ofSize: 15)
+        siretLabel.textAlignment = .left
+        siretLabel.numberOfLines = 1
+        return siretLabel
+    }()
+    
+    private let proView: UIView = {
+        let proView = UIView()
+        let proLabel = UILabel()
+        proLabel.text = "pro".localize.uppercased()
+        proLabel.textAlignment = .center
+        proLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        proLabel.textColor = UIColor(named: "defaultTextColor")
+        proView.addSubview(proLabel)
+        proLabel.anchor(topAnchor: proView.topAnchor,
+                        leftAnchor: proView.leftAnchor,
+                        bottomAnchor: proView.bottomAnchor,
+                        rightAnchor: proView.rightAnchor,
+                        paddingTop: 4,
+                        paddingLeft: 4,
+                        paddingBottom: 4,
+                        paddingRight: 4)
+        proView.layer.borderColor = UIColor(named: "defaultTextColor")?.cgColor
+        proView.layer.borderWidth = 1
+        proView.layer.cornerRadius = 8
+        return proView
+    }()
+    
     private func setupUI() {
         view.backgroundColor = UIColor(named: "defaultBackgroundColor")
         view.addSubview(scrollView)
@@ -101,7 +155,7 @@ class DetailViewController: UIViewController {
                           bottomAnchor: view.bottomAnchor,
                           rightAnchor: view.rightAnchor,
                           widthAnchor: view.widthAnchor)
-
+        
         scrollView.addSubview(advertisementImageView)
         advertisementImageView.anchor(topAnchor: scrollView.topAnchor,
                                       leftAnchor: scrollView.leftAnchor,
@@ -120,19 +174,73 @@ class DetailViewController: UIViewController {
                            paddingBottom: padding,
                            paddingRight: padding)
         
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(descriptionLabel)
+        for subview in [titleLabel, priceLabel, urgentView, categoryLabel, siretLabel, proView, separatorView, descriptionLabel] {
+            if advertisement?.siret == nil &&
+                (subview == siretLabel ||
+                 subview == proView) {
+                continue
+            }
+            if !((advertisement?.isUrgent) ?? false) &&
+                subview == urgentView {
+                continue
+            }
+            contentView.addSubview(subview)
+        }
 
         titleLabel.anchor(topAnchor: contentView.topAnchor,
                           leftAnchor: contentView.leftAnchor,
-                          bottomAnchor: descriptionLabel.topAnchor,
-                          rightAnchor: contentView.rightAnchor)
+                          bottomAnchor: priceLabel.topAnchor,
+                          rightAnchor: contentView.rightAnchor,
+                          paddingTop: padding,
+                          paddingLeft: padding,
+                          paddingBottom: padding,
+                          paddingRight: padding)
         
-        descriptionLabel.anchor(topAnchor: titleLabel.bottomAnchor,
-                                leftAnchor: contentView.leftAnchor,
+        priceLabel.anchor(leftAnchor: contentView.leftAnchor,
+                          bottomAnchor: categoryLabel.topAnchor,
+                          rightAnchor: contentView.rightAnchor,
+                          paddingLeft: padding,
+                          paddingBottom: padding,
+                          paddingRight: padding)
+
+        if advertisement?.isUrgent ?? false {
+            urgentView.anchor(topAnchor: priceLabel.topAnchor,
+                              bottomAnchor: priceLabel.bottomAnchor,
+                              rightAnchor: contentView.rightAnchor,
+                              paddingLeft: padding,
+                              paddingRight: padding)
+        }
+        categoryLabel.anchor(leftAnchor: contentView.leftAnchor,
+                             bottomAnchor: advertisement?.siret == nil ? separatorView.topAnchor : siretLabel.topAnchor,
+                             rightAnchor: contentView.rightAnchor,
+                             paddingLeft: padding,
+                             paddingBottom: advertisement?.siret == nil ? padding*2 : padding,
+                             paddingRight: padding)
+        if let siret = advertisement?.siret {
+            siretLabel.anchor(leftAnchor: contentView.leftAnchor,
+                              bottomAnchor: separatorView.topAnchor,
+                              rightAnchor: contentView.rightAnchor,
+                              paddingLeft: padding,
+                              paddingBottom: padding*2)
+            proView.anchor(topAnchor: siretLabel.topAnchor,
+                           bottomAnchor: siretLabel.bottomAnchor,
+                           rightAnchor: contentView.rightAnchor,
+                           paddingLeft: padding,
+                           paddingRight: padding)
+        }
+        separatorView.anchor(leftAnchor: contentView.leftAnchor,
+                             bottomAnchor: descriptionLabel.topAnchor,
+                             rightAnchor: contentView.rightAnchor,
+                             paddingLeft: padding,
+                             paddingBottom: padding*2,
+                             paddingRight: padding,
+                             height: 1)
+        
+        descriptionLabel.anchor(leftAnchor: contentView.leftAnchor,
                                 bottomAnchor: contentView.bottomAnchor,
                                 rightAnchor: contentView.rightAnchor,
-                                paddingTop: padding,
-                                paddingBottom: padding)
+                                paddingLeft: padding,
+                                paddingBottom: padding,
+                                paddingRight: padding)
     }
 }

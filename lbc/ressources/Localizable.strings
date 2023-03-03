@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  lbc
+
+  Created by Gilles SAMPIERI on 03/03/2023.
+  
+*/
+
+// MARK: - Commun
+
+"urgent" = "urgent";
+"pro" = "pro";

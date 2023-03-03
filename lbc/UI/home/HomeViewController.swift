@@ -34,7 +34,7 @@ class HomeViewController: UIViewController {
     private func makeTableView() {
         advertisementsTableView.delegate = self
         advertisementsTableView.dataSource = self
-        
+        advertisementsTableView.separatorColor = .clear
         view.addSubview(advertisementsTableView)
         
         advertisementsTableView.anchor(topAnchor: view.topAnchor,
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDelegate, UITableViewDataSource
+// MARK: - UITableViewDelegate, UITableViewDataSour
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -66,11 +66,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 86
+        return 96
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         navigationController?.pushViewController(DetailViewController(with: advertisements[indexPath.row]), animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

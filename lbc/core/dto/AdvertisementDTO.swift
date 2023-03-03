@@ -15,7 +15,7 @@ struct AdvertisementDTO: Codable {
     let price: Double?
     let images_url: AdvertisementImagesDTO?
     let creationDate: String?
-    let isUrgent: Bool?
+    let is_urgent: Bool
     let siret: String?
     
     func toEntity() -> Advertisement {
@@ -37,7 +37,7 @@ struct AdvertisementDTO: Codable {
                              smallImage: smallImageUrl,
                              thumbImage: thumbImageUrl,
                              creationDate: Date(),
-                             isUrgent: isUrgent ?? false,
+                             isUrgent: is_urgent,
                              siret: siret)
     }
 }
