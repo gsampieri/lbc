@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Advertisements"
+        title = "advertisements".localize.capitalized
         makeTableView()
         restManager.getAdvertisementsCategories { advertisements, error in
             if let error = error {
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDelegate, UITableViewDataSour
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

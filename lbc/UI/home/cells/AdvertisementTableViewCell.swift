@@ -61,7 +61,7 @@ class AdvertisementTableViewCell: UITableViewCell {
     
     private let categoryLabel: UILabel = {
         let categoryLabel = UILabel()
-        categoryLabel.font = UIFont.systemFont(ofSize: 13, weight: .thin)
+        categoryLabel.font = UIFont.systemFont(ofSize: 13, weight: .light)
         categoryLabel.textAlignment = .left
         return categoryLabel
     }()
@@ -151,6 +151,7 @@ class AdvertisementTableViewCell: UITableViewCell {
                           rightAnchor: rightAnchor,
                           paddingTop: padding,
                           paddingLeft: padding,
+                          paddingBottom: padding,
                           paddingRight: padding)
 
         urgentView.anchor(topAnchor: priceLabel.topAnchor,
