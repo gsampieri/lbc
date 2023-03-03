@@ -25,12 +25,11 @@ struct AdvertisementDTO: Codable {
            let _smallImageUrl = URL(string: smallImage) {
             smallImageUrl = _smallImageUrl
         }
-        if let thumbImage = images_url?.small,
+        if let thumbImage = images_url?.thumb,
            let _thumbImageUrl = URL(string: thumbImage) {
             thumbImageUrl = _thumbImageUrl
         }
         return Advertisement(id: id ?? 0,
-                             categoryId: category_id ?? 0,
                              category: LbcUserDefaults.categories?.first(where: { $0.id == category_id ?? 0 }) ?? Category(id: 0, name: ""),
                              title: title ?? "",
                              description: description ?? "",

@@ -37,11 +37,10 @@ class HomeViewController: UIViewController {
         
         view.addSubview(advertisementsTableView)
         
-        advertisementsTableView.translatesAutoresizingMaskIntoConstraints = false
-        advertisementsTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        advertisementsTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        advertisementsTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        advertisementsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        advertisementsTableView.anchor(topAnchor: view.topAnchor,
+                                       leftAnchor: view.leftAnchor,
+                                       bottomAnchor: view.bottomAnchor,
+                                       rightAnchor: view.rightAnchor)
         
         advertisementsTableView.register(AdvertisementTableViewCell.self, forCellReuseIdentifier: "advertisementCell")
     }
