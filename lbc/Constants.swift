@@ -11,5 +11,4 @@ class Constant: NSObject {
     struct api {
         static let baseUrl = Bundle.getParamString(key: "API_BASE_URL")
     }
-    
 }

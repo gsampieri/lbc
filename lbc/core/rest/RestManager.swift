@@ -15,7 +15,7 @@ extension RestManagerDependant {
     }
 }
 
-//typealias CategoryCompletion = ([CategoryDTO]?, Error?) -> Void
+typealias CategoriesCompletion = ([Category]?, Error?) -> Void
 typealias AdvertisementsCompletion = ([Advertisement]?, Error?) -> Void
 
 class RestManager {
@@ -26,26 +26,48 @@ class RestManager {
             completionHandler(nil, nil)
             return
         }
+            URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+                if let error = error {
+                    completionHandler(nil, error)
+                    return
+                }
+                if let httpResponse = response as? HTTPURLResponse,
+                   let data = data {
+                    do {
+                        let results = try JSONDecoder().decode([AdvertisementDTO].self, from: data)
+                        if httpResponse.statusCode == 200 {
+                            completionHandler(results.map( {$0.toEntity()} ), nil)
+                            return
+                        }
+                    } catch let error {
+                        completionHandler(nil, error)
+                    }
+                }
+            }
+            .resume()
+    }
+    
+    func getCategories(completionHandler: @escaping CategoriesCompletion) {
+        guard let url = URL(string: "\(Constant.api.baseUrl)/categories.json") else {
+            completionHandler(nil, nil)
+            return
+        }
         
         URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
             if let error = error {
                 completionHandler(nil, error)
                 return
             }
-            
-            if response != nil,
+            if let httpResponse = response as? HTTPURLResponse,
                let data = data {
                 do {
-                    let results = try JSONDecoder().decode([AdvertisementDTO].self, from: data)
-                    // TODO: refactor this 
-//                    if response. == 200 {
-                    var advertisements: [Advertisement] = []
-                    for result in results {
-                        advertisements.append(result.toEntity())
-                    }
-                        completionHandler(advertisements, nil)
+                    let results = try JSONDecoder().decode([CategoryDTO].self, from: data)
+                    if httpResponse.statusCode == 200 {
+                        let categories = results.map( {$0.toEntity()} )
+                        LbcUserDefaults.categories = categories
+                        completionHandler(categories, nil)
                         return
-//                    }
+                    }
                 } catch let error {
                     completionHandler(nil, error)
                 }
