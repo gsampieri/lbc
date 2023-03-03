@@ -25,14 +25,15 @@ class AdvertisementTableViewCell: UITableViewCell {
         return descriptionLabel
     }()
     
-    private let advertisementImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: ""))
+    private var advertisementImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "lbc_advertisment_placeholder"))
+        imageView.backgroundColor = .lightGray
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 8
+        imageView.tintColor = UIColor(named: "primary")
         return imageView
     }()
-       
     
     // MARK: View Lifecycle
     required init?(coder: NSCoder) {
@@ -41,6 +42,8 @@ class AdvertisementTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        advertisementImageView.image = UIImage(named: "lbc_advertisment_placeholder")
+        advertisementImageView.contentMode = .scaleAspectFill
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -87,13 +90,12 @@ class AdvertisementTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func setAdvertisement(_ advertisement: Advertisement) { // TODO: edit Object
+    func setAdvertisement(_ advertisement: Advertisement) {
         advertisementTitleLabel.text = advertisement.title
         advertisementPriceLabel.text = advertisement.price.getPriceString()
 
         if let smallImage = advertisement.smallImage {
             advertisementImageView.getImage(from: smallImage)
         }
-//        advertisementDescriptionLabel.text = advertisementDescriptionLabel.t
     }
 }
