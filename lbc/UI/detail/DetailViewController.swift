@@ -26,7 +26,7 @@ class DetailViewController: UIViewController {
             priceLabel.text = advertisement.price.getPriceString()
             categoryLabel.text = advertisement.category.name
             if let siret = advertisement.siret {
-                siretLabel.text = "N° SIRET: \(siret)"
+                siretLabel.text = "\("advertisement_detail_siret_number".localize.uppercased()): \(siret)"
             }
             descriptionLabel.text = advertisement.description
         } else {
@@ -216,7 +216,7 @@ class DetailViewController: UIViewController {
                              paddingLeft: padding,
                              paddingBottom: advertisement?.siret == nil ? padding*2 : padding,
                              paddingRight: padding)
-        if let siret = advertisement?.siret {
+        if advertisement?.siret != nil {
             siretLabel.anchor(leftAnchor: contentView.leftAnchor,
                               bottomAnchor: separatorView.topAnchor,
                               rightAnchor: contentView.rightAnchor,

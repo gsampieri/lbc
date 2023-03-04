@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
                                        leftAnchor: view.leftAnchor,
                                        bottomAnchor: view.bottomAnchor,
                                        rightAnchor: view.rightAnchor)
-        
+        advertisementsTableView.backgroundColor = UIColor(named: "defaultBackgroundColor")
         advertisementsTableView.register(AdvertisementTableViewCell.self, forCellReuseIdentifier: "advertisementCell")
     }
 }
@@ -66,7 +66,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 96
+        return 106
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

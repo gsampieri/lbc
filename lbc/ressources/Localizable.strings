@@ -7,8 +7,10 @@
 */
 
 // MARK: - Commun
-
 "urgent" = "urgent";
 "pro" = "pro";
 "advertisement" = "annonce";
 "advertisements" = "annonces";
+
+// MARK: - Advertisement Detail
+"advertisement_detail_siret_number" = "n° siret";

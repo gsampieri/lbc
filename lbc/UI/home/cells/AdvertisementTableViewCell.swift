@@ -28,6 +28,11 @@ class AdvertisementTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        contentCellView.backgroundColor = highlighted ? UIColor(named: "defaultSelectedColor") : UIColor(named: "contentBackgroundColor")
+    }
+    
     func setAdvertisement(_ advertisement: Advertisement) {
         self.advertisement = advertisement
         setupUI()
@@ -43,6 +48,13 @@ class AdvertisementTableViewCell: UITableViewCell {
     
     // MARK: - UI
     private let padding: CGFloat = 8
+    
+    private var contentCellView: UIView = {
+        let contentCellView = UIView()
+        contentCellView.backgroundColor = UIColor(named: "contentBackgroundColor")
+        contentCellView.layer.cornerRadius = 8
+        return contentCellView
+    }()
     
     private let titleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -70,6 +82,7 @@ class AdvertisementTableViewCell: UITableViewCell {
         let imageView = UIImageView(image: UIImage(named: "lbc_advertisment_placeholder"))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         imageView.layer.cornerRadius = 8
         imageView.tintColor = UIColor(named: "primaryColor")
         return imageView
@@ -120,43 +133,50 @@ class AdvertisementTableViewCell: UITableViewCell {
     }()
     
     private func setupUI() {
+        addSubview(contentCellView)
         for subview in [titleLabel, priceLabel, categoryLabel, advertisementImageView, urgentView] {
-            addSubview(subview)
+            contentCellView.addSubview(subview)
         }
-        advertisementImageView.anchor(topAnchor: topAnchor,
-                                      leftAnchor: leftAnchor,
-                                      bottomAnchor: bottomAnchor,
-                                      paddingTop: padding,
-                                      paddingLeft: padding,
-                                      paddingBottom: padding,
-                                      width: 80,
-                                      height: 80)
-        titleLabel.anchor(topAnchor: topAnchor,
+        
+        contentCellView.anchor(topAnchor: topAnchor,
+                               leftAnchor: leftAnchor,
+                               bottomAnchor: bottomAnchor,
+                               rightAnchor: rightAnchor,
+                               paddingTop: 5,
+                               paddingLeft: 5,
+                               paddingBottom: 5,
+                               paddingRight: 5)
+        backgroundColor = .clear
+        contentCellView.backgroundColor = UIColor(named: "contentBackgroundColor")
+        advertisementImageView.anchor(topAnchor: contentCellView.topAnchor,
+                                      leftAnchor: contentCellView.leftAnchor,
+                                      bottomAnchor: contentCellView.bottomAnchor,
+                                      width: 100,
+                                      height: 96)
+        titleLabel.anchor(topAnchor: contentCellView.topAnchor,
                           leftAnchor: advertisementImageView.rightAnchor,
-                          rightAnchor: rightAnchor,
+                          rightAnchor: contentCellView.rightAnchor,
                           paddingTop: padding,
                           paddingLeft: padding,
                           paddingRight: padding)
 
         categoryLabel.anchor(leftAnchor: advertisementImageView.rightAnchor,
                              bottomAnchor: priceLabel.topAnchor,
-                             rightAnchor: rightAnchor,
+                             rightAnchor: contentCellView.rightAnchor,
                              paddingTop: 2,
                              paddingLeft: padding,
-                             paddingBottom: 2,
                              paddingRight: padding)
 
         priceLabel.anchor(leftAnchor: advertisementImageView.rightAnchor,
-                          bottomAnchor: bottomAnchor,
-                          rightAnchor: rightAnchor,
-                          paddingTop: padding,
+                          bottomAnchor: contentCellView.bottomAnchor,
+                          rightAnchor: contentCellView.rightAnchor,
                           paddingLeft: padding,
                           paddingBottom: padding,
                           paddingRight: padding)
 
         urgentView.anchor(topAnchor: priceLabel.topAnchor,
                           bottomAnchor: priceLabel.bottomAnchor,
-                          rightAnchor: rightAnchor,
+                          rightAnchor: contentCellView.rightAnchor,
                           paddingLeft: padding,
                           paddingRight: padding)
         urgentView.isHidden = !advertisement.isUrgent

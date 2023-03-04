@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         UINavigationBar.appearance().tintColor = UIColor(named: "primaryColor")
         let colorView = UIView()
-        colorView.backgroundColor = UIColor(named: "defaultSelectedColor")
+        colorView.backgroundColor = .clear
         UITableViewCell.appearance().selectedBackgroundView = colorView
         return true
     }
