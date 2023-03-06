@@ -19,7 +19,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareAction))
+
         if let advertisement {
             if let advertisementImage = advertisement.thumbImage {
                 advertisementImageView.getImage(from: advertisementImage)
@@ -39,6 +40,26 @@ class DetailViewController: UIViewController {
             }
             descriptionLabel.text = advertisement.description
         }
+    }
+    
+    // MARK: - Actions
+    @objc func shareAction(sender: UIBarButtonItem) {
+        guard let advertisement else { return }
+        var itemsToShare: [Any] = []
+        itemsToShare.append(advertisement.title)
+        itemsToShare.append("\n\n\("price".localize.capitalized): \(advertisement.price.getPriceString())")
+        itemsToShare.append("\n\n\("advertisement_detail_description_title".localize.capitalized): \(advertisement.description)")
+        if let image = advertisementImageView.image {
+            itemsToShare.append(image)
+        }
+        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+        activityViewController.title = "Lbc"
+        activityViewController.setValue(advertisement.title, forKey: "subject")
+        activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact, .openInIBooks]
+//        activityViewController.popoverPresentationController?.sourceView = self.view
+//        activityViewController.popoverPresentationController?.sourceRect = sender.accessibilityFrame
+        activityViewController.popoverPresentationController?.barButtonItem = sender
+        navigationController?.present(activityViewController, animated: true)
     }
 
     // MARK: - UI
