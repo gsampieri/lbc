@@ -66,7 +66,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 106
+        return 116
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

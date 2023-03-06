@@ -25,6 +25,13 @@ class DetailViewController: UIViewController {
             titleLabel.text = advertisement.title
             priceLabel.text = advertisement.price.getPriceString()
             categoryLabel.text = advertisement.category.name
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .medium
+            dateFormatter.locale = Constant.language.locale
+            dateLabel.text = dateFormatter.string(from: advertisement.creationDate)
+            
             if let siret = advertisement.siret {
                 siretLabel.text = "\("advertisement_detail_siret_number".localize.uppercased()): \(siret)"
             }
@@ -73,6 +80,13 @@ class DetailViewController: UIViewController {
         return priceLabel
     }()
     
+    private let dateLabel: UILabel = {
+        let dateLabel = UILabel()
+        dateLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        dateLabel.textAlignment = .left
+        return dateLabel
+    }()
+    
     private let descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.font = UIFont.systemFont(ofSize: 15)
@@ -83,7 +97,7 @@ class DetailViewController: UIViewController {
     
     private let categoryLabel: UILabel = {
         let categoryLabel = UILabel()
-        categoryLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        categoryLabel.font = UIFont.systemFont(ofSize: 15, weight: .light)
         categoryLabel.textAlignment = .left
         return categoryLabel
     }()
@@ -162,7 +176,7 @@ class DetailViewController: UIViewController {
                                       bottomAnchor: nil,
                                       rightAnchor: scrollView.rightAnchor,
                                       widthAnchor:  scrollView.widthAnchor,
-                                      height: 300)
+                                      height: view.bounds.height/2)
         
         scrollView.addSubview(contentView)
         contentView.anchor(topAnchor: advertisementImageView.bottomAnchor,
@@ -174,7 +188,7 @@ class DetailViewController: UIViewController {
                            paddingBottom: padding,
                            paddingRight: padding)
         
-        for subview in [titleLabel, priceLabel, urgentView, categoryLabel, siretLabel, proView, separatorView, descriptionLabel] {
+        for subview in [titleLabel, priceLabel, dateLabel, urgentView, categoryLabel, siretLabel, proView, separatorView, descriptionLabel] {
             if advertisement?.siret == nil &&
                 (subview == siretLabel ||
                  subview == proView) {
@@ -197,7 +211,7 @@ class DetailViewController: UIViewController {
                           paddingRight: padding)
         
         priceLabel.anchor(leftAnchor: contentView.leftAnchor,
-                          bottomAnchor: categoryLabel.topAnchor,
+                          bottomAnchor: dateLabel.topAnchor,
                           rightAnchor: contentView.rightAnchor,
                           paddingLeft: padding,
                           paddingBottom: padding,
@@ -210,6 +224,11 @@ class DetailViewController: UIViewController {
                               paddingLeft: padding,
                               paddingRight: padding)
         }
+        dateLabel.anchor(leftAnchor: contentView.leftAnchor,
+                         bottomAnchor: categoryLabel.topAnchor,
+                         rightAnchor: contentView.rightAnchor,
+                         paddingLeft: padding,
+                         paddingRight: padding)
         categoryLabel.anchor(leftAnchor: contentView.leftAnchor,
                              bottomAnchor: advertisement?.siret == nil ? separatorView.topAnchor : siretLabel.topAnchor,
                              rightAnchor: contentView.rightAnchor,

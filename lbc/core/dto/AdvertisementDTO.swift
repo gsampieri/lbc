@@ -8,13 +8,13 @@
 import Foundation
 
 struct AdvertisementDTO: Codable {
-    let id: Double?
+    let id: Double
     let category_id: Double?
     let title: String?
     let description: String?
     let price: Double?
     let images_url: AdvertisementImagesDTO?
-    let creationDate: String?
+    let creation_date: String
     let is_urgent: Bool
     let siret: String?
     
@@ -29,14 +29,16 @@ struct AdvertisementDTO: Codable {
            let _thumbImageUrl = URL(string: thumbImage) {
             thumbImageUrl = _thumbImageUrl
         }
-        return Advertisement(id: id ?? 0,
+        let dateFormatter = ISO8601DateFormatter()
+        let date = dateFormatter.date(from: creation_date)
+        return Advertisement(id: id,
                              category: LbcUserDefaults.categories?.first(where: { $0.id == category_id ?? 0 }) ?? Category(id: 0, name: ""),
                              title: title ?? "",
                              description: description ?? "",
                              price: price ?? 0,
                              smallImage: smallImageUrl,
                              thumbImage: thumbImageUrl,
-                             creationDate: Date(),
+                             creationDate: date ?? Date(),
                              isUrgent: is_urgent,
                              siret: siret)
     }

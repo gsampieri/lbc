@@ -11,7 +11,7 @@ extension Double {
     
     func getPriceString() -> String {
         let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "fr_FR")
+        formatter.locale = Constant.language.locale
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2

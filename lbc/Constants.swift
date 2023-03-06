@@ -11,4 +11,8 @@ class Constant: NSObject {
     struct api {
         static let baseUrl = Bundle.getParamString(key: "API_BASE_URL")
     }
+
+    struct language {
+        static let locale = Locale(identifier: "fr_FR")
+    }
 }

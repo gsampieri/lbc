@@ -40,6 +40,12 @@ class AdvertisementTableViewCell: UITableViewCell {
         priceLabel.text = advertisement.price.getPriceString()
         categoryLabel.text = advertisement.category.name
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        dateFormatter.locale = Constant.language.locale
+        dateLabel.text = dateFormatter.string(from: advertisement.creationDate)
+        
         advertisementImageView.image = UIImage(named: "lbc_advertisment_placeholder")
         if let smallImage = advertisement.smallImage {
             advertisementImageView.getImage(from: smallImage)
@@ -69,6 +75,13 @@ class AdvertisementTableViewCell: UITableViewCell {
         priceLabel.font = UIFont.boldSystemFont(ofSize: 14)
         priceLabel.textAlignment = .left
         return priceLabel
+    }()
+    
+    private let dateLabel: UILabel = {
+        let dateLabel = UILabel()
+        dateLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        dateLabel.textAlignment = .left
+        return dateLabel
     }()
     
     private let categoryLabel: UILabel = {
@@ -112,13 +125,13 @@ class AdvertisementTableViewCell: UITableViewCell {
     
     private let proView: UIView = {
         let proView = UIView()
-        let urgentLabel = UILabel()
-        urgentLabel.text = "pro".localize.uppercased()
-        urgentLabel.textAlignment = .center
-        urgentLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        urgentLabel.textColor = UIColor(named: "defaultTextColor")
-        proView.addSubview(urgentLabel)
-        urgentLabel.anchor(topAnchor: proView.topAnchor,
+        let proLabel = UILabel()
+        proLabel.text = "pro".localize.uppercased()
+        proLabel.textAlignment = .center
+        proLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        proLabel.textColor = UIColor(named: "defaultTextColor")
+        proView.addSubview(proLabel)
+        proLabel.anchor(topAnchor: proView.topAnchor,
                            leftAnchor: proView.leftAnchor,
                            bottomAnchor: proView.bottomAnchor,
                            rightAnchor: proView.rightAnchor,
@@ -126,15 +139,22 @@ class AdvertisementTableViewCell: UITableViewCell {
                            paddingLeft: 4,
                            paddingBottom: 4,
                            paddingRight: 4)
-        proView.layer.borderColor = UIColor(named: "defaultTextColor")?.cgColor
-        proView.layer.borderWidth = 1
         proView.layer.cornerRadius = 8
+        proView.backgroundColor = UIColor(named: "contentBackgroundColor")
         return proView
     }()
     
     private func setupUI() {
         addSubview(contentCellView)
-        for subview in [titleLabel, priceLabel, categoryLabel, advertisementImageView, urgentView] {
+        for subview in [titleLabel, priceLabel, categoryLabel, dateLabel, advertisementImageView, urgentView, proView] {
+            if advertisement.siret == nil &&
+                 subview == proView {
+                continue
+            }
+            if !advertisement.isUrgent &&
+                subview == urgentView {
+                continue
+            }
             contentCellView.addSubview(subview)
         }
         
@@ -151,8 +171,8 @@ class AdvertisementTableViewCell: UITableViewCell {
         advertisementImageView.anchor(topAnchor: contentCellView.topAnchor,
                                       leftAnchor: contentCellView.leftAnchor,
                                       bottomAnchor: contentCellView.bottomAnchor,
-                                      width: 100,
-                                      height: 96)
+                                      width: 106,
+                                      height: 106)
         titleLabel.anchor(topAnchor: contentCellView.topAnchor,
                           leftAnchor: advertisementImageView.rightAnchor,
                           rightAnchor: contentCellView.rightAnchor,
@@ -160,10 +180,15 @@ class AdvertisementTableViewCell: UITableViewCell {
                           paddingLeft: padding,
                           paddingRight: padding)
 
+        dateLabel.anchor(leftAnchor: advertisementImageView.rightAnchor,
+                         bottomAnchor: categoryLabel.topAnchor,
+                         rightAnchor: contentCellView.rightAnchor,
+                         paddingLeft: padding,
+                         paddingRight: padding)
+        
         categoryLabel.anchor(leftAnchor: advertisementImageView.rightAnchor,
                              bottomAnchor: priceLabel.topAnchor,
                              rightAnchor: contentCellView.rightAnchor,
-                             paddingTop: 2,
                              paddingLeft: padding,
                              paddingRight: padding)
 
@@ -171,14 +196,23 @@ class AdvertisementTableViewCell: UITableViewCell {
                           bottomAnchor: contentCellView.bottomAnchor,
                           rightAnchor: contentCellView.rightAnchor,
                           paddingLeft: padding,
-                          paddingBottom: padding,
+                          paddingBottom: 4,
                           paddingRight: padding)
 
-        urgentView.anchor(topAnchor: priceLabel.topAnchor,
-                          bottomAnchor: priceLabel.bottomAnchor,
-                          rightAnchor: contentCellView.rightAnchor,
-                          paddingLeft: padding,
-                          paddingRight: padding)
         urgentView.isHidden = !advertisement.isUrgent
+        if advertisement.isUrgent {
+            urgentView.anchor(topAnchor: priceLabel.topAnchor,
+                              bottomAnchor: priceLabel.bottomAnchor,
+                              rightAnchor: contentCellView.rightAnchor,
+                              paddingLeft: padding,
+                              paddingRight: padding)
+        }
+        proView.isHidden = advertisement.siret == nil
+        if advertisement.siret != nil {
+            proView.anchor(leftAnchor: contentCellView.leftAnchor,
+                           bottomAnchor: contentCellView.bottomAnchor,
+                           paddingLeft: 4,
+                           paddingBottom: 4)
+        }
     }
 }
