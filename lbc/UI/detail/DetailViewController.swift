@@ -87,6 +87,15 @@ class DetailViewController: UIViewController {
         return dateLabel
     }()
     
+    private let descriptionTitleLabel: UILabel = {
+        let descriptionTitleLabel = UILabel()
+        descriptionTitleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        descriptionTitleLabel.textAlignment = .left
+        descriptionTitleLabel.numberOfLines = 1
+        descriptionTitleLabel.text = "description".localize.capitalized
+        return descriptionTitleLabel
+    }()
+    
     private let descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.font = UIFont.systemFont(ofSize: 15)
@@ -188,7 +197,7 @@ class DetailViewController: UIViewController {
                            paddingBottom: padding,
                            paddingRight: padding)
         
-        for subview in [titleLabel, priceLabel, dateLabel, urgentView, categoryLabel, siretLabel, proView, separatorView, descriptionLabel] {
+        for subview in [titleLabel, priceLabel, dateLabel, urgentView, categoryLabel, siretLabel, proView, separatorView, descriptionTitleLabel, descriptionLabel] {
             if advertisement?.siret == nil &&
                 (subview == siretLabel ||
                  subview == proView) {
@@ -233,14 +242,14 @@ class DetailViewController: UIViewController {
                              bottomAnchor: advertisement?.siret == nil ? separatorView.topAnchor : siretLabel.topAnchor,
                              rightAnchor: contentView.rightAnchor,
                              paddingLeft: padding,
-                             paddingBottom: advertisement?.siret == nil ? padding*2 : padding,
+                             paddingBottom: padding,
                              paddingRight: padding)
         if advertisement?.siret != nil {
             siretLabel.anchor(leftAnchor: contentView.leftAnchor,
                               bottomAnchor: separatorView.topAnchor,
                               rightAnchor: contentView.rightAnchor,
                               paddingLeft: padding,
-                              paddingBottom: padding*2)
+                              paddingBottom: padding)
             proView.anchor(topAnchor: siretLabel.topAnchor,
                            bottomAnchor: siretLabel.bottomAnchor,
                            rightAnchor: contentView.rightAnchor,
@@ -248,13 +257,18 @@ class DetailViewController: UIViewController {
                            paddingRight: padding)
         }
         separatorView.anchor(leftAnchor: contentView.leftAnchor,
-                             bottomAnchor: descriptionLabel.topAnchor,
+                             bottomAnchor: descriptionTitleLabel.topAnchor,
                              rightAnchor: contentView.rightAnchor,
                              paddingLeft: padding,
-                             paddingBottom: padding*2,
+                             paddingBottom: padding,
                              paddingRight: padding,
                              height: 1)
-        
+        descriptionTitleLabel.anchor(leftAnchor: contentView.leftAnchor,
+                                     bottomAnchor: descriptionLabel.topAnchor,
+                                     rightAnchor: contentView.rightAnchor,
+                                     paddingLeft: padding,
+                                     paddingBottom: padding/2,
+                                     paddingRight: padding)
         descriptionLabel.anchor(leftAnchor: contentView.leftAnchor,
                                 bottomAnchor: contentView.bottomAnchor,
                                 rightAnchor: contentView.rightAnchor,
