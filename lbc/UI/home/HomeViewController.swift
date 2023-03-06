@@ -15,22 +15,27 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         title = "advertisements".localize.capitalized
         makeTableView()
-        restManager.getAdvertisementsCategories { advertisements, error in
+        restManager.getAdvertisementsCategories { [weak self] advertisements, error in
             if let error = error {
-                print(error)
-                //TODO: Show popup
+                DispatchQueue.main.async {
+                    let errorAlert = UIAlertController(title: "error".localize.capitalized,
+                                                       message: error.localizedDescription,
+                                                       preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "Ok", style: .default))
+                    self?.present(errorAlert, animated: true)
+                }
                 return
             }
             if let advertisements = advertisements {
-                self.advertisements = advertisements
+                self?.advertisements = advertisements
             }
             DispatchQueue.main.async {
-                self.advertisementsTableView.reloadData()
+                self?.advertisementsTableView.reloadData()
             }
         }
     }
     
-    // UI
+    // MARK: - UI
     private func makeTableView() {
         advertisementsTableView.delegate = self
         advertisementsTableView.dataSource = self
@@ -40,7 +45,8 @@ class HomeViewController: UIViewController {
         advertisementsTableView.anchor(topAnchor: view.topAnchor,
                                        leftAnchor: view.leftAnchor,
                                        bottomAnchor: view.bottomAnchor,
-                                       rightAnchor: view.rightAnchor)
+                                       rightAnchor: view.rightAnchor,
+                                       enableInsets: true)
         advertisementsTableView.backgroundColor = UIColor(named: "defaultBackgroundColor")
         advertisementsTableView.register(AdvertisementTableViewCell.self, forCellReuseIdentifier: "advertisementCell")
     }

@@ -26,25 +26,25 @@ class RestManager {
             completionHandler(nil, nil)
             return
         }
-            URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
-                if let error = error {
-                    completionHandler(nil, error)
-                    return
-                }
-                if let httpResponse = response as? HTTPURLResponse,
-                   let data = data {
-                    do {
-                        let results = try JSONDecoder().decode([AdvertisementDTO].self, from: data)
-                        if httpResponse.statusCode == 200 {
-                            completionHandler(results.map( {$0.toEntity()} ), nil)
-                            return
-                        }
-                    } catch let error {
-                        completionHandler(nil, error)
+        URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            if let httpResponse = response as? HTTPURLResponse,
+               let data = data {
+                do {
+                    let results = try JSONDecoder().decode([AdvertisementDTO].self, from: data)
+                    if httpResponse.statusCode == 200 {
+                        completionHandler(results.map( {$0.toEntity()} ), nil)
+                        return
                     }
+                } catch let error {
+                    completionHandler(nil, error)
                 }
             }
-            .resume()
+        }
+        .resume()
     }
     
     func getCategories(completionHandler: @escaping CategoriesCompletion) {

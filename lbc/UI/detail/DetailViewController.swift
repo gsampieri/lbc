@@ -36,8 +36,6 @@ class DetailViewController: UIViewController {
                 siretLabel.text = "\("advertisement_detail_siret_number".localize.uppercased()): \(siret)"
             }
             descriptionLabel.text = advertisement.description
-        } else {
-            // TODO: show some error
         }
     }
 
