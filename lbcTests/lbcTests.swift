@@ -18,19 +18,29 @@ final class lbcTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+    func testInitAdvertisement() {
+        let advertisement = Advertisement(id: 1701863796,
+                                          category: Category(id: 1.0,
+                                                             name: "Véhicule"),
+                                          title: "Suzuki gn 125 - Parfait état",
+                                          description: "Vends moto SUZUKI GN 125 Rouge Parfait état Véhicule soigné et faiblement kilométré Dort dans un parking fermé et chauffé Utilisée uniquement en ville Kilométrage : 33768 Régulièrement entretenue chez Actua Scoot (Bd Beaumarchais) depuis plus de 10 ans 1er contact par téléphone",
+                                          price: 1550,
+                                          smallImage: URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/ad-small/f8d72ff2d2dfc0b9488bc20dbb0669eced1099ef.jpg"),
+                                          thumbImage: URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/ad-thumb/f8d72ff2d2dfc0b9488bc20dbb0669eced1099ef.jpg"),
+                                          creationDate: Date(),
+                                          isUrgent: true,
+                                          siret: "476 324 343")
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        XCTAssertEqual("Suzuki gn 125 - Parfait état", advertisement.title)
+        XCTAssertEqual(true, advertisement.isUrgent)
+        XCTAssertEqual(1550, advertisement.price)
+        XCTAssertEqual("Véhicule", advertisement.category.name)
     }
-
+    
+    func testGetPriceString() {
+         let price: Double = 4200.99
+         let expectedString = "4 200,99 €"
+         let resultString = price.getPriceString()
+         XCTAssertEqual(resultString, expectedString)
+     }
 }
