@@ -17,9 +17,14 @@ class HomeViewController: UIViewController {
         title = "advertisements".localize.capitalized
         
         makeTableView()
+        getAdvertisements()
+    }
+    
+    private func getAdvertisements() {
         restManager.getAdvertisementsCategories { [weak self] advertisements, error in
             if let error = error {
                 DispatchQueue.main.async {
+                    self?.refreshControl.endRefreshing()
                     let errorAlert = UIAlertController(title: "error".localize.capitalized,
                                                        message: error.localizedDescription,
                                                        preferredStyle: .alert)
@@ -32,9 +37,14 @@ class HomeViewController: UIViewController {
                 self?.advertisements = advertisements
             }
             DispatchQueue.main.async {
+                self?.refreshControl.endRefreshing()
                 self?.advertisementsTableView.reloadData()
             }
         }
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        getAdvertisements()
     }
     
     // MARK: - UI
@@ -42,6 +52,7 @@ class HomeViewController: UIViewController {
         advertisementsTableView.delegate = self
         advertisementsTableView.dataSource = self
         advertisementsTableView.separatorColor = .clear
+        advertisementsTableView.refreshControl = refreshControl
         view.addSubview(advertisementsTableView)
         
         advertisementsTableView.anchor(topAnchor: view.topAnchor,
@@ -51,6 +62,14 @@ class HomeViewController: UIViewController {
         advertisementsTableView.backgroundColor = UIColor(named: "defaultBackgroundColor")
         advertisementsTableView.register(AdvertisementTableViewCell.self, forCellReuseIdentifier: "advertisementCell")
     }
+    
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor(named: "primaryColor")
+        refreshControl.showsLargeContentViewer = true
+        refreshControl.addTarget(HomeViewController.self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
