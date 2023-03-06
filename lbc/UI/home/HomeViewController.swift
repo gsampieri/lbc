@@ -13,7 +13,9 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.largeTitleDisplayMode = .always
         title = "advertisements".localize.capitalized
+        
         makeTableView()
         restManager.getAdvertisementsCategories { [weak self] advertisements, error in
             if let error = error {
@@ -45,8 +47,7 @@ class HomeViewController: UIViewController {
         advertisementsTableView.anchor(topAnchor: view.topAnchor,
                                        leftAnchor: view.leftAnchor,
                                        bottomAnchor: view.bottomAnchor,
-                                       rightAnchor: view.rightAnchor,
-                                       enableInsets: true)
+                                       rightAnchor: view.rightAnchor)
         advertisementsTableView.backgroundColor = UIColor(named: "defaultBackgroundColor")
         advertisementsTableView.register(AdvertisementTableViewCell.self, forCellReuseIdentifier: "advertisementCell")
     }
