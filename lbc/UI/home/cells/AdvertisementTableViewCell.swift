@@ -158,14 +158,14 @@ class AdvertisementTableViewCell: UITableViewCell {
             contentCellView.addSubview(subview)
         }
         
-        contentCellView.anchor(topAnchor: topAnchor,
-                               leftAnchor: leftAnchor,
+        contentCellView.anchor(leadingAnchor: safeAreaLayoutGuide.leadingAnchor,
+                               trailingAnchor: safeAreaLayoutGuide.trailingAnchor,
+                               topAnchor: topAnchor,
                                bottomAnchor: bottomAnchor,
-                               rightAnchor: rightAnchor,
                                paddingTop: 5,
-                               paddingLeft: 5,
+                               paddingLeft: 10,
                                paddingBottom: 5,
-                               paddingRight: 5)
+                               paddingRight: 10)
         backgroundColor = .clear
         contentCellView.backgroundColor = UIColor(named: "contentBackgroundColor")
         advertisementImageView.anchor(topAnchor: contentCellView.topAnchor,

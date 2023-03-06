@@ -18,6 +18,8 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.largeTitleDisplayMode = .never
+        
         if let advertisement {
             if let advertisementImage = advertisement.thumbImage {
                 advertisementImageView.getImage(from: advertisementImage)
@@ -186,10 +188,10 @@ class DetailViewController: UIViewController {
                                       height: view.bounds.height/2)
         
         scrollView.addSubview(contentView)
-        contentView.anchor(topAnchor: advertisementImageView.bottomAnchor,
-                           leftAnchor: scrollView.leftAnchor,
+        contentView.anchor(leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor,
+                           trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor,
+                           topAnchor: advertisementImageView.bottomAnchor,
                            bottomAnchor: scrollView.bottomAnchor,
-                           rightAnchor: scrollView.rightAnchor,
                            paddingTop: padding,
                            paddingLeft: padding,
                            paddingBottom: padding,

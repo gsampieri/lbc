@@ -32,6 +32,12 @@ extension UIView {
         bottomInset = insets.bottom
         
         translatesAutoresizingMaskIntoConstraints = false
+        if let leadingAnchor = leadingAnchor {
+            self.leadingAnchor.constraint(equalTo: leadingAnchor, constant: paddingLeft).isActive = true
+        }
+        if let trailingAnchor = trailingAnchor {
+            self.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -paddingRight).isActive = true
+        }
         if let topAnchor = topAnchor {
             self.topAnchor.constraint(equalTo: topAnchor, constant: paddingTop+topInset).isActive = true
         }
