@@ -67,7 +67,7 @@ class HomeViewController: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor(named: "primaryColor")
         refreshControl.showsLargeContentViewer = true
-        refreshControl.addTarget(HomeViewController.self, action: #selector(refresh), for: .valueChanged)
+        refreshControl.addTarget(nil, action: #selector(refresh), for: .valueChanged)
         return refreshControl
     }()
 }

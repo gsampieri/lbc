@@ -26,6 +26,7 @@
 		EE78AC2529B2170A00DD77C5 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE78AC2429B2170900DD77C5 /* Colors.xcassets */; };
 		EE78AC2829B24BD100DD77C5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78AC2729B24BD100DD77C5 /* String+Extension.swift */; };
 		EE78AC2A29B24C1400DD77C5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE78AC2929B24C1400DD77C5 /* Localizable.strings */; };
+		EE8E193A29B64436008AE595 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E193929B64436008AE595 /* CacheManager.swift */; };
 		EE9AD1C829AFA53B00E8594A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9AD1C729AFA53B00E8594A /* AppDelegate.swift */; };
 		EE9AD1CA29AFA53B00E8594A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9AD1C929AFA53B00E8594A /* SceneDelegate.swift */; };
 		EE9AD1CC29AFA53B00E8594A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9AD1CB29AFA53B00E8594A /* HomeViewController.swift */; };
@@ -73,6 +74,7 @@
 		EE78AC2429B2170900DD77C5 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		EE78AC2729B24BD100DD77C5 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		EE78AC2929B24C1400DD77C5 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		EE8E193929B64436008AE595 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		EE9AD1C429AFA53B00E8594A /* lbc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lbc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE9AD1C729AFA53B00E8594A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EE9AD1C929AFA53B00E8594A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				EE78AC1729B20AD300DD77C5 /* UserDefaults.swift */,
+				EE8E193929B64436008AE595 /* CacheManager.swift */,
 			);
 			path = cache;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				EE78AC2829B24BD100DD77C5 /* String+Extension.swift in Sources */,
 				EE78AC2029B2103C00DD77C5 /* UIView+Extension.swift in Sources */,
 				EE78AC2229B2103C00DD77C5 /* UIImageView+Extension.swift in Sources */,
+				EE8E193A29B64436008AE595 /* CacheManager.swift in Sources */,
 				EE78AC1229B2080A00DD77C5 /* CategoryDTO.swift in Sources */,
 				EE9AD1CA29AFA53B00E8594A /* SceneDelegate.swift in Sources */,
 				EE78ABE429AFAB4600DD77C5 /* DetailViewController.swift in Sources */,
