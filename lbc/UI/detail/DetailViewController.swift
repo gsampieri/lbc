@@ -19,7 +19,11 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-        
+
+        fillData()
+    }
+    
+    func fillData() {
         if let advertisement {
             if let advertisementImage = advertisement.thumbImage {
                 advertisementImageView.getImage(from: advertisementImage)
@@ -169,7 +173,7 @@ class DetailViewController: UIViewController {
         return proView
     }()
     
-    private func setupUI() {
+    func setupUI() {
         view.backgroundColor = UIColor(named: "defaultBackgroundColor")
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -185,7 +189,7 @@ class DetailViewController: UIViewController {
                                       bottomAnchor: nil,
                                       rightAnchor: scrollView.rightAnchor,
                                       widthAnchor:  scrollView.widthAnchor,
-                                      height: view.bounds.height/2)
+                                      height: 350)
         
         scrollView.addSubview(contentView)
         contentView.anchor(leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor,
@@ -226,6 +230,7 @@ class DetailViewController: UIViewController {
                           paddingBottom: padding,
                           paddingRight: padding)
 
+        urgentView.isHidden = !(advertisement?.isUrgent ?? false)
         if advertisement?.isUrgent ?? false {
             urgentView.anchor(topAnchor: priceLabel.topAnchor,
                               bottomAnchor: priceLabel.bottomAnchor,
@@ -244,6 +249,9 @@ class DetailViewController: UIViewController {
                              paddingLeft: padding,
                              paddingBottom: padding,
                              paddingRight: padding)
+        
+        siretLabel.isHidden = advertisement?.siret == nil
+        proView.isHidden = advertisement?.siret == nil
         if advertisement?.siret != nil {
             siretLabel.anchor(leftAnchor: contentView.leftAnchor,
                               bottomAnchor: separatorView.topAnchor,

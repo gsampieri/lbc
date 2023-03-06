@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app_icon" translatesAutoresizingMaskIntoConstraints="NO" id="xm8-Qh-c4Y">
-                                <rect key="frame" x="168.66666666666666" y="410.66666666666669" width="55.666666666666657" height="55.666666666666686"/>
+                                <rect key="frame" x="166.66666666666666" y="408.66666666666669" width="60" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="primary"/>
                             </imageView>
@@ -37,7 +37,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="app_icon" width="55.666667938232422" height="55.666667938232422"/>
+        <image name="app_icon" width="60" height="60"/>
         <namedColor name="defaultBackgroundColor">
             <color red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

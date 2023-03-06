@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
     }
     
     private func getAdvertisements() {
+        refreshControl.beginRefreshing()
         restManager.getAdvertisementsCategories { [weak self] advertisements, error in
             if let error = error {
                 DispatchQueue.main.async {
@@ -96,8 +97,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationController?.pushViewController(DetailViewController(with: advertisements[indexPath.row]), animated: true)
-        tableView.deselectRow(at: indexPath, animated: true)
+        if UIDevice.current.userInterfaceIdiom == .pad &&
+            traitCollection.verticalSizeClass == .regular,
+           let detailViewController = (navigationController?.splitViewController?.viewControllers.last as? UINavigationController)?.viewControllers.first as? DetailViewController {
+
+            detailViewController.advertisement = advertisements[indexPath.row]
+            detailViewController.fillData()
+            detailViewController.setupUI()
+        } else {
+            navigationController?.pushViewController(DetailViewController(with: advertisements[indexPath.row]), animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
 }
 
