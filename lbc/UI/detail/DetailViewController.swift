@@ -44,7 +44,7 @@ class DetailViewController: UIViewController {
     
     // MARK: - Actions
     @objc func shareAction(sender: UIBarButtonItem) {
-        guard let advertisement else { return }
+        guard let advertisement = advertisement else { return }
         var itemsToShare: [Any] = []
         itemsToShare.append(advertisement.title)
         itemsToShare.append("\n\n\("price".localize.capitalized): \(advertisement.price.getPriceString())")
@@ -56,9 +56,8 @@ class DetailViewController: UIViewController {
         activityViewController.title = "Lbc"
         activityViewController.setValue(advertisement.title, forKey: "subject")
         activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact, .openInIBooks]
-//        activityViewController.popoverPresentationController?.sourceView = self.view
-//        activityViewController.popoverPresentationController?.sourceRect = sender.accessibilityFrame
         activityViewController.popoverPresentationController?.barButtonItem = sender
+        
         navigationController?.present(activityViewController, animated: true)
     }
 
