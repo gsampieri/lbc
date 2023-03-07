@@ -11,7 +11,7 @@ class CacheManager<Key: Hashable, Value> {
     private let wrapped = NSCache<WrappedKey, Entry>()
     private let entryLifetime: TimeInterval
     
-    init(entryLifetime: TimeInterval = 60) { // 60 secondes
+    init(entryLifetime: TimeInterval = 5 * 60) { // 5 min.
         self.entryLifetime = entryLifetime
     }
 
