@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  lbc
+
+  Created by Gilles SAMPIERI on 03/03/2023.
+  
+*/
+
+// MARK: - Commun
+"urgent" = "urgent";
+"pro" = "pro";
+"advertisement" = "annonce";
+"advertisements" = "annonces";
+"error" = "erreur";
+
+// MARK: - Advertisement Detail
+"advertisement_detail_siret_number" = "n° siret";
+"advertisement_detail_description_title" = "description";
