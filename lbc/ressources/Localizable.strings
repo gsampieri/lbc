@@ -12,6 +12,7 @@
 "advertisement" = "annonce";
 "advertisements" = "annonces";
 "error" = "erreur";
+"price" = "prix";
 
 // MARK: - Advertisement Detail
 "advertisement_detail_siret_number" = "n° siret";
